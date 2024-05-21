@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import cors from "cors";
+import userRoutes from "./routes/userRoutes.js";
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -15,6 +16,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   return res.status(200).send("Welcome to mailbox client");
 });
+
+app.use("/api/auth", userRoutes);
 
 async function startServer() {
   try {
