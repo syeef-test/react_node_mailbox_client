@@ -1,7 +1,13 @@
 import "./App.css";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
-import Signup from "./pages/signup";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+import ForgetPassword from "./pages/ForgetPassword";
+import Profile from "./pages/Profile";
+
+import { useSelector } from "react-redux";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -11,6 +17,7 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
   return (
     <>
       <Router>
@@ -19,6 +26,13 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
+          <Route path="/signin">
+            <Signin />
+          </Route>
+          <Route path="/forgetPassword">
+            <ForgetPassword />
+          </Route>
+          <Route path="/profile">{isAuth && <Profile />}</Route>
         </Switch>
       </Router>
     </>

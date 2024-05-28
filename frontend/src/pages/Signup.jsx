@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import { Spinner, Alert } from "react-bootstrap";
 import axios from "axios";
 
-function signup() {
+function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -97,4 +97,4 @@ function signup() {
   );
 }
 
-export default signup;
+export default Signup;

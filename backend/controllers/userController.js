@@ -35,3 +35,40 @@ export const postSignup = async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+export const generateAccessToken = (id, name) => {
+  return jwt.sign({ userId: id, name: name }, process.env.TOKEN_SECRET);
+};
+
+export const postLogin = async (req, res, next) => {
+  try {
+    if (!req.body.email || !req.body.password) {
+      res.status(400).send({ message: "Send all required fields" });
+    }
+
+    const response = await Auth.findOne({ email: req.body.email });
+
+    if (!response) {
+      return res.status(500).send({ message: "Failed to signin" });
+    }
+
+    if (response && Object.keys(response).length > 0) {
+      const match = bcrypt.compareSync(req.body.password, response.password);
+
+      if (match) {
+        return res.status(200).send({
+          message: "Signin succesful",
+          token: generateAccessToken(response._id, response.name),
+          name: response.name,
+          userId: response._id,
+          email: response.email,
+        });
+      } else {
+        return res.status(500).send({ message: "Failed to signin" });
+      }
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
