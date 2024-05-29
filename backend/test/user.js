@@ -26,4 +26,28 @@ describe("Users API Tests", () => {
       }
     });
   });
+
+  describe("POST /signin", () => {
+    it("should create a new user and login user", async () => {
+      const data = {
+        email: `testing-${Math.floor(Math.random() * 9999)}@gmail.com`,
+        password: "1111",
+      };
+
+      try {
+        const signupResponse = await request.post("auth/signup").send(data);
+        console.log("Response Status:", signupResponse.status);
+        console.log("Response Body:", signupResponse.body);
+        expect(signupResponse.status).to.equal(200); // Assuming a successful POST returns a 200 status code
+        //expect(response.body.data).to.deep.include(data);
+
+        const signinResponse = await request.post("auth/signin").send(data);
+        console.log("Response Status Login:", signupResponse.status);
+        console.log("Response Body Login:", signupResponse.body);
+        expect(signinResponse.status).to.equal(200);
+      } catch (error) {
+        throw error;
+      }
+    });
+  });
 });
