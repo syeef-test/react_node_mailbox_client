@@ -4,6 +4,7 @@ dotenv.config();
 import mongoose from "mongoose";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
+import mailRoutes from "./routes/mailRoutes.js";
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", userRoutes);
+app.use("/api/mail", mailRoutes);
 
 async function startServer() {
   try {

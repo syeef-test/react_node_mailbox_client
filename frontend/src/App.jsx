@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import ForgetPassword from "./pages/ForgetPassword";
 import Profile from "./pages/Profile";
+import SendMail from "./pages/SendMail";
 
 import { useSelector } from "react-redux";
 
@@ -33,6 +34,7 @@ function App() {
             <ForgetPassword />
           </Route>
           <Route path="/profile">{isAuth && <Profile />}</Route>
+          <Route path="/sendMail">{isAuth && <SendMail />}</Route>
         </Switch>
       </Router>
     </>

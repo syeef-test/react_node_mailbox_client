@@ -22,10 +22,13 @@ function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink to="/signup">Signup</NavLink>
+            {!isAuth && <NavLink to="/signup">Signup</NavLink>}
           </Nav>
           <Nav className="me-auto">
-            <NavLink to="/signin">Signin</NavLink>
+            {!isAuth && <NavLink to="/signin">Signin</NavLink>}
+          </Nav>
+          <Nav className="me-auto">
+            {isAuth && <NavLink to="/sendMail">Send Mail</NavLink>}
           </Nav>
           {isAuth && (
             <Button
