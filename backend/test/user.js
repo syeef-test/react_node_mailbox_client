@@ -50,4 +50,24 @@ describe("Users API Tests", () => {
       }
     });
   });
+
+  describe("POST /send mail", () => {
+    it("should send mail details and store in mongodb", async () => {
+      const data = {
+        to: `testing-${Math.floor(Math.random() * 9999)}@gmail.com`,
+        from: `testing-${Math.floor(Math.random() * 9999)}@gmail.com`,
+        body: "<h1>Test Mail</h1>",
+        subject: "Test Mail",
+      };
+
+      try {
+        const sendMailResponse = await request.post("mail/sendmail").send(data);
+        console.log("Response Status:", sendMailResponse.status);
+        console.log("Response Body:", sendMailResponse.body);
+        expect(sendMailResponse.status).to.equal(200);
+      } catch (error) {
+        throw error;
+      }
+    });
+  });
 });
