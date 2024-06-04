@@ -6,6 +6,7 @@ import Signin from "./pages/Signin";
 import ForgetPassword from "./pages/ForgetPassword";
 import Profile from "./pages/Profile";
 import SendMail from "./pages/SendMail";
+import InBox from "./pages/Inbox";
 
 import { useSelector } from "react-redux";
 
@@ -35,6 +36,7 @@ function App() {
           </Route>
           <Route path="/profile">{isAuth && <Profile />}</Route>
           <Route path="/sendMail">{isAuth && <SendMail />}</Route>
+          <Route path="/">{isAuth && <InBox />}</Route>
         </Switch>
       </Router>
     </>

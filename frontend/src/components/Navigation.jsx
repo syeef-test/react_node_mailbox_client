@@ -30,6 +30,9 @@ function Navigation() {
           <Nav className="me-auto">
             {isAuth && <NavLink to="/sendMail">Send Mail</NavLink>}
           </Nav>
+          <Nav className="me-auto">
+            {isAuth && <NavLink to="/">Inbox</NavLink>}
+          </Nav>
           {isAuth && (
             <Button
               variant="danger"
