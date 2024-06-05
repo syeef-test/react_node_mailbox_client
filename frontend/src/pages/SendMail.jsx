@@ -48,9 +48,15 @@ function SendMail() {
         console.log(obj);
         setLoading(true);
         setError("");
+        const token = localStorage.getItem("token");
         const response = await axios.post(
           "http://127.0.0.1:3000/api/mail/sendmail",
-          obj
+          obj,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
         );
 
         // console.log("frontend_response:", response.data);

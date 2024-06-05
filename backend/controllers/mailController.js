@@ -60,3 +60,20 @@ export const sendMail = async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+export const getInboxMail = async (req, res, next) => {
+  try {
+    //console.log(req.user);
+    const email = req.body.email;
+    console.log("email", req.user.email);
+    const response = await Mail.find({ to: req.user.email });
+    console.log("mail data", response);
+    if (!response.length) {
+      return res.status(404).send({ message: "No mail data found" });
+    }
+    return res.status(200).send({ message: "Mail data found", data: response });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};

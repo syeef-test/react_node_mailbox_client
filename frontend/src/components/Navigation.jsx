@@ -31,7 +31,7 @@ function Navigation() {
             {isAuth && <NavLink to="/sendMail">Send Mail</NavLink>}
           </Nav>
           <Nav className="me-auto">
-            {isAuth && <NavLink to="/">Inbox</NavLink>}
+            {isAuth && <NavLink to="/inbox">Inbox</NavLink>}
           </Nav>
           {isAuth && (
             <Button

@@ -36,7 +36,7 @@ function App() {
           </Route>
           <Route path="/profile">{isAuth && <Profile />}</Route>
           <Route path="/sendMail">{isAuth && <SendMail />}</Route>
-          <Route path="/">{isAuth && <InBox />}</Route>
+          <Route path="/inbox">{isAuth && <InBox />}</Route>
         </Switch>
       </Router>
     </>
