@@ -21,6 +21,8 @@ export const sendMail = async (req, res, next) => {
       subject: subject,
     };
 
+    console.log(newMail);
+
     const response = await Mail.create(newMail);
 
     if (!response) {
