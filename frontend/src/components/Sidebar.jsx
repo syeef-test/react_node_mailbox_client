@@ -3,7 +3,7 @@ import { ListGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ unreadCount }) => {
   return (
     <div className="col-md-1 p-3 bg-light">
       <div>
@@ -14,7 +14,7 @@ const Sidebar = () => {
 
       <ListGroup>
         <ListGroup.Item as={NavLink} to="/inbox">
-          Inbox
+          Inbox <span className="badge bg-primary">{unreadCount}</span>
         </ListGroup.Item>
         <ListGroup.Item action href="#">
           Sent

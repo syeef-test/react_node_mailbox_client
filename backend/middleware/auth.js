@@ -6,7 +6,7 @@ const authenticate = async (req, res, next) => {
     const token = req.header("authorization");
     //console.log("auth:", token);
     const user = jwt.verify(token, process.env.TOKEN_SECRET);
-    console.log("User Details:", user.userId);
+    //console.log("User Details:", user.userId);
 
     const foundUser = await Auth.findById(user.userId);
 

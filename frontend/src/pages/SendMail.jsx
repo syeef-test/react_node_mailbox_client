@@ -45,7 +45,7 @@ function SendMail() {
           body: body,
           from: from,
         };
-        console.log(obj);
+        //console.log(obj);
         setLoading(true);
         setError("");
         const token = localStorage.getItem("token");

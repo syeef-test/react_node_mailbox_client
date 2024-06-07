@@ -23,6 +23,11 @@ const mailSchema = mongoose.Schema(
       required: true,
       default: true,
     },
+    read: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,
