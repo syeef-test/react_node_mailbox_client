@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ListGroup, Button } from "react-bootstrap";
 import "../css/EmailList.css";
 
-const EmailList = ({ emails, onEmailClick }) => {
+const EmailList = ({ emails, onEmailClick, onDeleteClick }) => {
   const [selectedEmail, setSelectedEmail] = useState(null);
 
   const handleEmailClick = (email) => {
@@ -22,12 +22,23 @@ const EmailList = ({ emails, onEmailClick }) => {
               <ListGroup.Item
                 key={email._id}
                 className="d-flex justify-content-between align-items-start"
-                onClick={() => handleEmailClick(email)}
+                onClick={(e) => handleEmailClick(email)}
               >
                 <div>
                   {!email.read && <span className="blue-dot"></span>}
                   <div className="fw-bold">{email.subject}</div>
                   <small>{email.from}</small>
+                </div>
+                <div>
+                  <Button
+                    variant="danger"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onDeleteClick(email._id);
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </div>
               </ListGroup.Item>
             ))}
