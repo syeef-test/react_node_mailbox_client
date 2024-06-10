@@ -27,7 +27,12 @@ const EmailList = ({ emails, onEmailClick, onDeleteClick }) => {
                 <div>
                   {!email.read && <span className="blue-dot"></span>}
                   <div className="fw-bold">{email.subject}</div>
-                  <small>{email.from}</small>
+                  <small>
+                    <h6>From:</h6> {email.from}
+                  </small>
+                  <small>
+                    <h6>To:</h6> {email.to}
+                  </small>
                 </div>
                 <div>
                   <Button

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import EmailList from "../components/EmailList";
 import { Container, Row } from "react-bootstrap";
@@ -52,21 +52,31 @@ const reducer = (state, action) => {
 
 const Inbox = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [view, setView] = useState("inbox");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-          "http://127.0.0.1:3000/api/mail/getInboxMail",
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
+        // const response = await axios.get(
+        //   "http://127.0.0.1:3000/api/mail/getInboxMail",
+        //   {
+        //     headers: {
+        //       authorization: token,
+        //     },
+        //   }
+        // );
         //console.log(response);
         //setEmails(response.data.data);
+
+        const url =
+          view === "inbox"
+            ? "http://127.0.0.1:3000/api/mail/getInboxMail"
+            : "http://127.0.0.1:3000/api/mail/getSentMail";
+        const response = await axios.get(url, {
+          headers: { authorization: token },
+        });
+
         dispatch({ type: "SET_EMAILS", payload: response.data.data });
       } catch (error) {
         console.log(error);
@@ -74,7 +84,7 @@ const Inbox = () => {
     };
 
     fetchData();
-  }, []);
+  }, [view]);
 
   const handleEmailClick = async (emailId) => {
     try {
@@ -118,7 +128,7 @@ const Inbox = () => {
     <Container fluid>
       <Row>
         <Header />
-        <Sidebar unreadCount={state.unreadCount} />
+        <Sidebar unreadCount={state.unreadCount} onSelect={setView} />
         <EmailList
           emails={state.emails}
           onEmailClick={handleEmailClick}
