@@ -58,17 +58,6 @@ const Inbox = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        // const response = await axios.get(
-        //   "http://127.0.0.1:3000/api/mail/getInboxMail",
-        //   {
-        //     headers: {
-        //       authorization: token,
-        //     },
-        //   }
-        // );
-        //console.log(response);
-        //setEmails(response.data.data);
-
         const url =
           view === "inbox"
             ? "http://127.0.0.1:3000/api/mail/getInboxMail"
@@ -89,14 +78,6 @@ const Inbox = () => {
   const handleEmailClick = async (emailId) => {
     try {
       const token = localStorage.getItem("token");
-      // const response = await axios.post(
-      //   `http://127.0.0.1:3000/api/mail/markAsRead/${emailId}`,
-      //   {
-      //     headers: {
-      //       authorization: token,
-      //     },
-      //   }
-      // );
 
       const response = await axios.post(
         `http://127.0.0.1:3000/api/mail/markAsRead/${emailId}`

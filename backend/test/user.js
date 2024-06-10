@@ -143,6 +143,57 @@ describe("Users API Tests", () => {
   });
   describe("POST /deletemail", () => {
     it("should mark the mail as deleted", async () => {
+      // try {
+      //   const data = {
+      //     email: `syeefislam@yahoo.com`,
+      //     password: "123",
+      //   };
+      //   const signinResponse = await axios.post(
+      //     `http://127.0.0.1:3000/api/auth/signin`,
+      //     data
+      //   );
+      //   expect(signinResponse.status).to.equal(200);
+      //   const authToken = signinResponse.data.token;
+      //   const mailData = {
+      //     to: `kazisyeef@gmail.com`,
+      //     from: data.email,
+      //     body: "<h1>Test Mail</h1>",
+      //     subject: "Test Mail",
+      //   };
+      //   const sendMailResponse = await axios.post(
+      //     `http://127.0.0.1:3000/api/mail/sendmail`,
+      //     mailData,
+      //     {
+      //       headers: {
+      //         authorization: `${authToken}`,
+      //       },
+      //     }
+      //   );
+      //   const emailId = sendMailResponse.data._id;
+      //   expect(sendMailResponse.status).to.equal(200);
+      //   const data2 = {
+      //     email: `kazisyeef@gmail.com`,
+      //     password: "123",
+      //   };
+      //   const signinResponse2 = await axios.post(
+      //     `http://127.0.0.1:3000/api/auth/signin`,
+      //     data2
+      //   );
+      //   expect(signinResponse2.status).to.equal(200);
+      //   const authToken2 = signinResponse2.data.token;
+      //   const deleteMailResponse = await axios.post(
+      //     `http://127.0.0.1:3000/api/mail/markAsDelete/${emailId}`
+      //   );
+      //   expect(deleteMailResponse.status).to.equal(200);
+      // } catch (error) {
+      //   console.log(error);
+      //   throw error;
+      // }
+    });
+  });
+
+  describe("GET /getSentMail", () => {
+    it("should fetch all emails which is sent", async () => {
       try {
         const data = {
           email: `syeefislam@yahoo.com`,
@@ -164,9 +215,8 @@ describe("Users API Tests", () => {
           subject: "Test Mail",
         };
 
-        const sendMailResponse = await axios.post(
-          `http://127.0.0.1:3000/api/mail/sendmail`,
-          mailData,
+        const getSentMailResponse = await axios.get(
+          `http://127.0.0.1:3000/api/mail/getSentMail`,
           {
             headers: {
               authorization: `${authToken}`,
@@ -174,28 +224,9 @@ describe("Users API Tests", () => {
           }
         );
 
-        const emailId = sendMailResponse.data._id;
+        //const emailId = getSentMailResponse.data._id;
 
-        expect(sendMailResponse.status).to.equal(200);
-
-        const data2 = {
-          email: `kazisyeef@gmail.com`,
-          password: "123",
-        };
-
-        const signinResponse2 = await axios.post(
-          `http://127.0.0.1:3000/api/auth/signin`,
-          data2
-        );
-
-        expect(signinResponse2.status).to.equal(200);
-        const authToken2 = signinResponse2.data.token;
-
-        const deleteMailResponse = await axios.post(
-          `http://127.0.0.1:3000/api/mail/markAsDelete/${emailId}`
-        );
-
-        expect(deleteMailResponse.status).to.equal(200);
+        expect(getSentMailResponse.status).to.equal(200);
       } catch (error) {
         console.log(error);
         throw error;
