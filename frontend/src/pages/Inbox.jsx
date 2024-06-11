@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import EmailList from "../components/EmailList";
 import { Container, Row } from "react-bootstrap";
@@ -54,26 +54,32 @@ const Inbox = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [view, setView] = useState("inbox");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const url =
-          view === "inbox"
-            ? "http://127.0.0.1:3000/api/mail/getInboxMail"
-            : "http://127.0.0.1:3000/api/mail/getSentMail";
-        const response = await axios.get(url, {
-          headers: { authorization: token },
-        });
+  const fetchData = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const url =
+        view === "inbox"
+          ? "http://127.0.0.1:3000/api/mail/getInboxMail"
+          : "http://127.0.0.1:3000/api/mail/getSentMail";
+      const response = await axios.get(url, {
+        headers: { authorization: token },
+      });
 
-        dispatch({ type: "SET_EMAILS", payload: response.data.data });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
+      dispatch({ type: "SET_EMAILS", payload: response.data.data });
+    } catch (error) {
+      console.log(error);
+    }
   }, [view]);
+
+  useEffect(() => {
+    fetchData();
+
+    const interval = setInterval(() => {
+      fetchData();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [fetchData]);
 
   const handleEmailClick = async (emailId) => {
     try {
