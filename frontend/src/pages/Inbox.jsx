@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import EmailList from "../components/EmailList";
 import { Container, Row } from "react-bootstrap";
-import Header from "../components/Header";
 import axios from "axios";
 
 const initialState = {
@@ -114,7 +113,6 @@ const Inbox = () => {
   return (
     <Container fluid>
       <Row>
-        <Header />
         <Sidebar unreadCount={state.unreadCount} onSelect={setView} />
         <EmailList
           emails={state.emails}
