@@ -1,16 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Spinner, Alert } from "react-bootstrap";
 import axios from "axios";
+import useAxios from "../hooks/useAxios/index.js";
 
 function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+
   const [success, setSuccess] = useState(false);
+  const { response, error, loading, fetchData } = useAxios();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,32 +25,33 @@ function Signup() {
           email: email,
           password: password,
         };
-        // console.log(obj);
-        setLoading(true);
-        setError("");
-        const response = await axios.post(
-          "http://127.0.0.1:3000/api/auth/signup",
-          obj
-        );
 
-        if (response.status === 200) {
-          setLoading(false);
-          setSuccess(true);
-          emailRef.current.value = "";
-          passwordRef.current.value = "";
-          confirmPasswordRef.current.value = "";
-        }
-      } else {
-        //alert("Password and Confirm Password did not match");
-        setError("Password and Confirm Password did not match");
-        setLoading(false);
+        fetchData({
+          url: "auth/signup",
+          method: "POST",
+          data: obj,
+        });
+
+        // if (response) {
+        //   emailRef.current.value = "";
+        //   passwordRef.current.value = "";
+        //   confirmPasswordRef.current.value = "";
+        // }
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
-      setError("Failed to create user.");
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      setSuccess(true);
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+      confirmPasswordRef.current.value = "";
+      console.log("Signup successful:", response);
+    }
+  }, [response]);
   return (
     <>
       <div
@@ -64,11 +66,7 @@ function Signup() {
           Signup
           <div>
             {loading ? <Spinner animation="border" role="status" /> : ""}
-            {success ? (
-              <Alert variant="success">User created successfully!</Alert>
-            ) : (
-              ""
-            )}
+            {success && <Alert variant="success">Signup Successful</Alert>}
             {error ? <Alert variant="danger">{error}</Alert> : ""}
           </div>
           <div>

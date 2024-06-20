@@ -9,15 +9,15 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import useAxios from "../hooks/useAxios/index.js";
 
 function SendMail() {
   const toRef = useRef();
   const subjectRef = useRef();
   const bodyRef = useRef();
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const { response, error, loading, fetchData } = useAxios();
 
   const history = useHistory();
 
@@ -46,8 +46,7 @@ function SendMail() {
           from: from,
         };
         //console.log(obj);
-        setLoading(true);
-        setError("");
+
         const token = localStorage.getItem("token");
         const response = await axios.post(
           "http://127.0.0.1:3000/api/mail/sendmail",
@@ -63,17 +62,14 @@ function SendMail() {
         // dispatch(authActions.login(response.data));
         // history.push("/profile");
 
-        if (response.status === 200) {
-          setLoading(false);
-          setSuccess(true);
+        // if (response.status === 200) {
 
-          toRef.current.value = "";
-          subjectRef.current.value = "";
-          setEditorState(EditorState.createEmpty());
-        }
-      } else {
-        setError("To subject and body can not be empty");
-        setLoading(false);
+        //   setSuccess(true);
+
+        //   toRef.current.value = "";
+        //   subjectRef.current.value = "";
+        //   setEditorState(EditorState.createEmpty());
+        // }
       }
     } catch (error) {
       console.log(error);

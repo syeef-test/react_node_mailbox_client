@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Spinner, Alert } from "react-bootstrap";
@@ -6,14 +6,13 @@ import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store/auth-reducer";
+import useAxios from "../hooks/useAxios/index.js";
 
 function Signin() {
   const emailRef = useRef();
   const passwordRef = useRef();
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const { response, error, loading, fetchData } = useAxios();
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -29,34 +28,28 @@ function Signin() {
           email: email,
           password: password,
         };
-        // console.log(obj);
-        setLoading(true);
-        setError("");
-        const response = await axios.post(
-          "http://127.0.0.1:3000/api/auth/signin",
-          obj
-        );
 
-        console.log("frontend_response:", response.data);
-        dispatch(authActions.login(response.data));
-        history.push("/profile");
-
-        if (response.status === 200) {
-          setLoading(false);
-          setSuccess(true);
-          emailRef.current.value = "";
-          passwordRef.current.value = "";
-        }
-      } else {
-        setError("Password and Email can not be emapty");
-        setLoading(false);
+        fetchData({
+          url: "auth/signin",
+          method: "POST",
+          data: obj,
+        });
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
-      setError("Failed to signin user.");
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      setSuccess(true);
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+      console.log("Signin successful:", response);
+      dispatch(authActions.login(response));
+      history.push("/profile");
+    }
+  }, [response]);
   return (
     <>
       <div
