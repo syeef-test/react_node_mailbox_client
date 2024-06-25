@@ -85,7 +85,6 @@ function Signin() {
                   </Button>
                 </div>
               </form>
-              <Link to="/forgetPassword">Forget Password ?</Link>
               <Link to="/signup">Don't have account Sign up </Link>
             </Card>
           </div>

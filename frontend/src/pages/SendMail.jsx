@@ -13,7 +13,7 @@ import useAxios from "../hooks/useAxios/index.js";
 function SendMail() {
   const toRef = useRef();
   const subjectRef = useRef();
-  const bodyRef = useRef();
+  //const bodyRef = useRef();
 
   const [success, setSuccess] = useState(false);
   const { response, error, loading, fetchData } = useAxios();
@@ -61,13 +61,18 @@ function SendMail() {
   };
 
   useEffect(() => {
-    if (response) {
+    let isMounted = true;
+    if (response && isMounted) {
       setSuccess(true);
       toRef.current.value = "";
       subjectRef.current.value = "";
       setEditorState(EditorState.createEmpty());
       console.log("Send Mail:", response);
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [response]);
 
   return (
@@ -94,12 +99,19 @@ function SendMail() {
           <div>
             <Card style={{ padding: "20px", maxWidth: "500px" }}>
               <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="to" ref={toRef} />
-                <input type="text" placeholder="subject" ref={subjectRef} />
+                <input type="text" placeholder="To" ref={toRef} />
+                <input type="text" placeholder="Subject" ref={subjectRef} />
                 <div style={{ marginTop: "20px" }}>
                   <Editor
                     editorState={editorState}
                     onEditorStateChange={setEditorState}
+                    editorStyle={{
+                      minHeight: "200px",
+                      padding: "10px",
+                      backgroundColor: "#f8f9fa",
+                      borderRadius: "4px",
+                    }}
+                    placeholder="Enter text here..."
                   />
                 </div>
                 <div>

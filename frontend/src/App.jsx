@@ -3,7 +3,7 @@ import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
-import ForgetPassword from "./pages/ForgetPassword";
+
 import Profile from "./pages/Profile";
 import SendMail from "./pages/SendMail";
 import InBox from "./pages/Inbox";
@@ -31,9 +31,7 @@ function App() {
           <Route path="/signin">
             <Signin />
           </Route>
-          <Route path="/forgetPassword">
-            <ForgetPassword />
-          </Route>
+
           <Route path="/profile">{isAuth && <Profile />}</Route>
           <Route path="/sendMail">{isAuth && <SendMail />}</Route>
           <Route path="/inbox">{isAuth && <InBox />}</Route>

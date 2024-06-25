@@ -90,7 +90,7 @@ const Inbox = () => {
 
   useEffect(() => {
     if (response) {
-      console.log("useeffesct", response);
+      //console.log("useeffesct", response);
 
       if (response.message === "Mail data found in inbox") {
         dispatch({ type: "SET_EMAILS", payload: response });
