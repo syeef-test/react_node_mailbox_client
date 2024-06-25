@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Spinner, Alert } from "react-bootstrap";
-import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store/auth-reducer";
@@ -45,7 +44,7 @@ function Signin() {
       setSuccess(true);
       emailRef.current.value = "";
       passwordRef.current.value = "";
-      console.log("Signin successful:", response);
+      //console.log("Signin successful:", response);
       dispatch(authActions.login(response));
       history.push("/profile");
     }

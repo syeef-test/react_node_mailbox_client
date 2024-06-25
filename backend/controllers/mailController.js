@@ -73,9 +73,11 @@ export const getInboxMail = async (req, res, next) => {
     const response = await Mail.find({ to: req.user.email, status: true });
 
     if (!response.length) {
-      return res.status(404).send({ message: "No mail data found" });
+      return res.status(404).send({ message: "No mail data found in inbox" });
     }
-    return res.status(200).send({ message: "Mail data found", data: response });
+    return res
+      .status(200)
+      .send({ message: "Mail data found in inbox", data: response });
   } catch (error) {
     console.error(error.message);
     res.status(500).send({ message: error.message });
@@ -91,7 +93,7 @@ export const markAsRead = async (req, res, next) => {
     });
 
     if (!response) {
-      return res.status(404).send({ message: "No mail data found" });
+      return res.status(404).send({ message: "No mail data found for read" });
     }
     return res
       .status(200)
@@ -112,7 +114,7 @@ export const markAsDelete = async (req, res, next) => {
     });
 
     if (!response) {
-      return res.status(404).send({ message: "No mail data found" });
+      return res.status(404).send({ message: "No mail data found for delete" });
     }
     return res
       .status(200)
@@ -127,9 +129,11 @@ export const getSentMail = async (req, res, next) => {
   try {
     const response = await Mail.find({ from: req.user.email, status: true });
     if (!response.length) {
-      return res.status(404).send({ message: "No mail data found" });
+      return res.status(404).send({ message: "No mail data found in sent" });
     }
-    return res.status(200).send({ message: "Mail data found", data: response });
+    return res
+      .status(200)
+      .send({ message: "Mail data found in sent", data: response });
   } catch (error) {
     console.error(error.message);
     res.status(500).send({ message: error.message });

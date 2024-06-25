@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { ListGroup, Button } from "react-bootstrap";
 import "../css/EmailList.css";
 
-const EmailList = ({ emails, onEmailClick, onDeleteClick }) => {
-  const [selectedEmail, setSelectedEmail] = useState(null);
-
-  const handleEmailClick = (email) => {
-    onEmailClick(email._id);
-    setSelectedEmail(email);
-  };
-
-  const handleBackClick = () => setSelectedEmail(null);
-
+const EmailList = ({
+  emails,
+  selectedEmail,
+  onEmailClick,
+  onDeleteClick,
+  onBackClick,
+}) => {
   return (
     <div className="col-md-9">
       <h2 className="h4">Inbox</h2>
@@ -22,7 +19,7 @@ const EmailList = ({ emails, onEmailClick, onDeleteClick }) => {
               <ListGroup.Item
                 key={email._id}
                 className="d-flex justify-content-between align-items-start"
-                onClick={(e) => handleEmailClick(email)}
+                onClick={() => onEmailClick(email)}
               >
                 <div>
                   {!email.read && <span className="blue-dot"></span>}
@@ -50,8 +47,8 @@ const EmailList = ({ emails, onEmailClick, onDeleteClick }) => {
         </ListGroup>
       ) : (
         <div>
-          <Button variant="secondary" onClick={handleBackClick}>
-            Back to Inbox
+          <Button variant="secondary" onClick={onBackClick}>
+            Back
           </Button>
           <div className="email-details">
             <h3>Subject:{selectedEmail.subject}</h3>

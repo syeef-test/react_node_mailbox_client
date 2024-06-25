@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Spinner, Alert } from "react-bootstrap";
-import axios from "axios";
 import useAxios from "../hooks/useAxios/index.js";
 
 function Signup() {

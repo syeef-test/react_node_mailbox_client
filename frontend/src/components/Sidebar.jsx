@@ -19,15 +19,6 @@ const Sidebar = ({ unreadCount, onSelect }) => {
         <ListGroup.Item action onClick={() => onSelect("sent")}>
           Sent
         </ListGroup.Item>
-        <ListGroup.Item action href="#">
-          Drafts
-        </ListGroup.Item>
-        <ListGroup.Item action href="#">
-          Spam
-        </ListGroup.Item>
-        <ListGroup.Item action href="#">
-          Trash
-        </ListGroup.Item>
       </ListGroup>
     </div>
   );

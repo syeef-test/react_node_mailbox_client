@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Spinner, Alert } from "react-bootstrap";
-import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 
 import { EditorState, convertToRaw } from "draft-js";
@@ -33,7 +32,6 @@ function SendMail() {
       const body = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
       if (!to || !subject || !body.trim()) {
-        setError("To, subject, and body cannot be empty");
         return;
       }
 
@@ -48,35 +46,30 @@ function SendMail() {
         //console.log(obj);
 
         const token = localStorage.getItem("token");
-        const response = await axios.post(
-          "http://127.0.0.1:3000/api/mail/sendmail",
-          obj,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
-
-        // console.log("frontend_response:", response.data);
-        // dispatch(authActions.login(response.data));
-        // history.push("/profile");
-
-        // if (response.status === 200) {
-
-        //   setSuccess(true);
-
-        //   toRef.current.value = "";
-        //   subjectRef.current.value = "";
-        //   setEditorState(EditorState.createEmpty());
-        // }
+        fetchData({
+          url: "mail/sendmail",
+          method: "POST",
+          data: obj,
+          headers: {
+            authorization: token,
+          },
+        });
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
-      setError("Failed to send mail.");
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      setSuccess(true);
+      toRef.current.value = "";
+      subjectRef.current.value = "";
+      setEditorState(EditorState.createEmpty());
+      console.log("Send Mail:", response);
+    }
+  }, [response]);
+
   return (
     <>
       <div

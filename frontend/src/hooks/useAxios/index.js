@@ -12,7 +12,7 @@ const useAxios = () => {
 
   axiosInstance.interceptors.request.use(
     (config) => {
-      console.log("Sending request to:", config.url);
+      //console.log("Sending request to:", config.url);
       return config;
     },
     (error) => {
@@ -22,7 +22,7 @@ const useAxios = () => {
 
   axiosInstance.interceptors.response.use(
     (response) => {
-      console.log("Received response from:", response.config.url);
+      //console.log("Received response from:", response.config.url);
       return response;
     },
     (error) => {
@@ -38,7 +38,13 @@ const useAxios = () => {
     };
   }, []);
 
-  const fetchData = async ({ url, method, data = {}, params = {} }) => {
+  const fetchData = async ({
+    url,
+    method,
+    data = {},
+    params = {},
+    headers = {},
+  }) => {
     setLoading(true);
     try {
       const result = await axiosInstance({
@@ -46,6 +52,7 @@ const useAxios = () => {
         method,
         data,
         params,
+        headers,
         cancelToken: axios.CancelToken.source().token,
       });
       setResponse(result.data);
